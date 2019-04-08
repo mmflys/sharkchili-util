@@ -54,7 +54,7 @@ public class ConnectionUtil {
 		try {
 			Class.forName(driver);
 			Connection connection = DriverManager.getConnection(url, username, password);
-			LOGGER.info("Connect to database success,", connection);
+			LOGGER.info("Connect to database success", connection);
 			return connection;
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
