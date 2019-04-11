@@ -20,4 +20,8 @@ public class MathUtil {
 		return sum;
 	}
 
+	public static double  log(int base,int x){
+		return Math.log(x)/Math.log(base);
+	}
+
 }

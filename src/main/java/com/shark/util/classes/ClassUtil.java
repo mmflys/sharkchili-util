@@ -3,6 +3,7 @@ package com.shark.util.classes;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
@@ -109,5 +110,19 @@ public class ClassUtil {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static <T> Class<T> getGenericClass(Field field){
+		Type type=field.getGenericType();
+		if (type instanceof ParameterizedType){
+			ParameterizedType p= (ParameterizedType) type;
+			Class genericClazz = (Class)p.getActualTypeArguments()[0];
+			return genericClazz;
+		}
+		return null;
+	}
+
+	public static <T> T getFirstEnum(Class<T> enumClass){
+		return enumClass.getEnumConstants()[0];
 	}
 }

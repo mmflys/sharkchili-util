@@ -15,5 +15,9 @@ public class NumberUtil {
 	public static long convertToLong(Number number){
 		return number.longValue();
 	}
-	
+
+	public static int highestIndex(int number){
+		int highestOneBit=Integer.highestOneBit(number);
+		return (int) MathUtil.log(2,highestOneBit);
+	}
 }
