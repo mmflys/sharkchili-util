@@ -89,6 +89,25 @@ public class ClassUtil {
 	}
 
 	/**
+	 * Get first generic type of the class
+	 * @param c class
+	 * @param index index
+	 * @param <T> generic parameter
+	 * @return the generic type of the class
+	 */
+	public static <T> Class<T> getSuperGenericClass(Class c,int index){
+		Type type=c.getGenericSuperclass();
+		ParameterizedType parameterizedType= (ParameterizedType) type;
+		String className= parameterizedType.getActualTypeArguments()[index].getTypeName();
+		try {
+			return (Class<T>) Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			LOGGER(ClassUtil.class).error("class: {} not found",className);
+		}
+		return null;
+	}
+
+	/**
 	 * Get first generic type of the object
 	 * @param object object
 	 * @param <T> generic parameter
@@ -96,6 +115,17 @@ public class ClassUtil {
 	 */
 	public static <T> Class<T> getSuperGenericClass(Object object){
 		return ClassUtil.getSuperGenericClass(object.getClass());
+	}
+
+	/**
+	 * Get first generic type of the object
+	 * @param object object
+	 * @param index index
+	 * @param <T> generic parameter
+	 * @return the first generic type of the object
+	 */
+	public static <T> Class<T> getSuperGenericClass(Object object,int index){
+		return ClassUtil.getSuperGenericClass(object.getClass(),index);
 	}
 
 	/**
