@@ -5,7 +5,7 @@ import com.shark.util.util.enums.StatusCode;
 
 public class EnumUtil {
     /**
-     * Get enum instance by field(name) value
+     * Get enum instance inherit from {@link Status} by field(name) value
      * @param enumC class of enum
      * @param name name
      * @param <T> enum
@@ -21,7 +21,7 @@ public class EnumUtil {
     }
 
     /**
-     * Get enum instance by code value
+     * Get enum instance  inherit from {@link StatusCode} by code value
      * @param enumC class of enum
      * @param code int value mapping to special enum instance
      * @param <T> enum

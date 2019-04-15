@@ -16,7 +16,12 @@ public class NumberUtil {
 		return number.longValue();
 	}
 
-	public static int highestIndex(int number){
+	/**
+	 * Calculate Index of highest binary bit
+	 * @param number number
+	 * @return A int value
+	 */
+	public static int highestBinaryBitOneIndex(int number){
 		int highestOneBit=Integer.highestOneBit(number);
 		return (int) MathUtil.log(2,highestOneBit);
 	}

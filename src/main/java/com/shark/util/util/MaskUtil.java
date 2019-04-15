@@ -1,11 +1,7 @@
 package com.shark.util.util;
 
 import com.google.common.collect.Lists;
-import com.shark.util.classes.ClassUtil;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.List;
 
 public class MaskUtil {
@@ -31,7 +27,7 @@ public class MaskUtil {
 
     public static List<Integer> split(int mask){
         List<Integer> bitList= Lists.newArrayList();
-        int highest=NumberUtil.highestIndex(mask);
+        int highest=NumberUtil.highestBinaryBitOneIndex(mask);
         for (int i = 0; i < highest; i++) {
             boolean isTrue=trueBit(mask,i);
             if (isTrue){

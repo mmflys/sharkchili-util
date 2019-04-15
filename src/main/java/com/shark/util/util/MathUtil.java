@@ -13,13 +13,19 @@ public class MathUtil {
 	 * @return the sum of the elements
 	 */
 	public static Integer sum(int...es){
-		Integer sum=0;
+		int sum=0;
 		for (int e : es) {
 			sum+=e;
 		}
 		return sum;
 	}
 
+	/**
+	 * Calculate log value
+	 * @param base base number
+	 * @param x real number
+	 * @return logarithmic
+	 */
 	public static double  log(int base,int x){
 		return Math.log(x)/Math.log(base);
 	}
