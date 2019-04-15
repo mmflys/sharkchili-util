@@ -1,4 +1,4 @@
-package com.shark.util.util;
+package com.shark.util.util.enums;
 
 import com.shark.util.util.enums.Status;
 import com.shark.util.util.enums.StatusCode;
