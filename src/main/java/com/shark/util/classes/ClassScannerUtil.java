@@ -2,6 +2,7 @@ package com.shark.util.classes;
 
 import com.google.common.collect.Sets;
 import com.shark.util.util.PredicateUtil;
+import com.shark.util.util.SeparatorUtil;
 import com.shark.util.util.StringUtil;
 import com.shark.util.util.scan.UrlScanner;
 import org.slf4j.Logger;
@@ -37,11 +38,12 @@ public class ClassScannerUtil {
 	 * @param filters filter class
 	 * @return a set of class
 	 */
-	public static Set<Class> scanClassFromClassPath(Predicate<String> classPathFilter,Predicate<Class>...filters){
+	@SafeVarargs
+	public static Set<Class> scanClassFromClassPath(Predicate<String> classPathFilter, Predicate<Class>...filters){
 		LOGGER.debug("scan class from class path start");
 		Set<Class> result= Sets.newHashSet();
 		String classPaths = System.getProperty("java.class.path");
-		String[] classPathArray=classPaths.split(";");
+		String[] classPathArray=classPaths.split(SeparatorUtil.getPathSeparatorByOS());
 		for (String classPath : classPathArray) {
 			if (!classPathFilter.test(classPath)){
 				continue;
@@ -152,7 +154,7 @@ public class ClassScannerUtil {
 								// 添加到classes
 								classes.add(Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className));
 							} catch (ClassNotFoundException e) {
-								LOGGER.error("Not find class file: ", className);
+								LOGGER.error("Not find class file: {}", className);
 							}
 						}
 					}
@@ -180,14 +182,10 @@ public class ClassScannerUtil {
 			return;
 		}
 		// 如果存在 就获取包下的所有文件 包括目录
-		File[] dirfiles = dir.listFiles(new FileFilter() {
-			// 自定义过滤规则 如果可以循环(包含子目录) 或则是以.class结尾的文件(编译好的java类文件)
-			public boolean accept(File file) {
-				return (recursive && file.isDirectory()) || (file.getName().endsWith(".class"));
-			}
-		});
+		// 自定义过滤规则 如果可以循环(包含子目录) 或则是以.class结尾的文件(编译好的java类文件)
+		File[] dirFiles = dir.listFiles(file -> (recursive && file.isDirectory()) || (file.getName().endsWith(".class")));
 		// 循环所有文件
-		for (File file : dirfiles) {
+		for (File file : dirFiles) {
 			// 如果是目录 则继续扫描
 			if (file.isDirectory()) {
 				findClassInPackage(packageName + "." + file.getName(), file.getAbsolutePath(), recursive, classes);
@@ -198,7 +196,7 @@ public class ClassScannerUtil {
 					// 这里用forName有一些不好，会触发static方法，没有使用classLoader的load干净
 					classes.add(Thread.currentThread().getContextClassLoader().loadClass(packageName + '.' + className));
 				} catch (ClassNotFoundException e) {
-					LOGGER.error("Not find class file: ", className);
+					LOGGER.error("Not find class file: {}", className);
 				}
 			}
 		}
